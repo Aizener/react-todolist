@@ -1,0 +1,22 @@
+@mixin buttonActive {
+  color: #ccc;
+  box-shadow: -3px -3px 5px inset #fff, 3px 3px 5px inset #ccc;
+}
+
+.button {
+  color: #333;
+  font-size: 14px;
+  padding: 8px 15px;
+  outline: none;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: -3px -3px 5px #eee, 3px 3px 5px #ccc;
+  &:active {
+    @include buttonActive;
+  }
+  &.active {
+    @include buttonActive;
+  }
+}

@@ -1,0 +1,16 @@
+.text {
+  color: #333;
+  font-size: 14px;
+  padding: 10px;
+  resize: none;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  outline: none;
+  &::-webkit-input-placeholder {
+    color: #ccc;
+    font-size: 14px;
+  }
+  &:focus {
+    box-shadow: 0 0 5px #eee;
+  }
+}

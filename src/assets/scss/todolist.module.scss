@@ -1,0 +1,9 @@
+.todolist {
+  display: flex;
+  flex: content;
+  &Left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
