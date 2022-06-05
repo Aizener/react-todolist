@@ -3,6 +3,7 @@ const { default: style } = require('../assets/scss/input.module.scss')
 
 const Input: React.FC<{
   value: string,
+  width: string,
   placeholder?: string,
   maxlength?: number,
   onChange: (value: string) => void
@@ -10,6 +11,7 @@ const Input: React.FC<{
   return (
     <input
       value={props.value}
+      style={{ width: props.width }}
       className={style.input}
       maxLength={props.maxlength}
       placeholder={props.placeholder}

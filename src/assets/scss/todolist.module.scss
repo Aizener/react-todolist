@@ -1,9 +1,70 @@
 .todolist {
   display: flex;
   flex: content;
+  height: 100%;
   &Left {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+  }
+  &Middle {
+    display: flex;
+    flex: 1;
+    overflow-y: auto;
+    margin: 0 15px;
+    &::-webkit-scrollbar {
+      width: 10px;
+      border: 1px solid #eee;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #eee;
+      border-radius: 10px;
+    }
+  }
+  &Right {
+    display: flex;
+    flex: 1;
+  }
+}
+.row {
+  margin-top: 15px;
+}
+.rowTop0 {
+  margin-top: 0;
+}
+.list {
+  width: 100%;
+  margin: 0;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  &Item {
+    list-style: none;
+    padding: 10px;
+    box-shadow: 0 0 5px #eee;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-top: 15px;
+    user-select: none;
+    &:first-child {
+      margin-top: 0;
+    }
+    &Title {
+      padding: 10px 0;
+      font-size: 18px;
+      font-weight: bold;
+      border-bottom: 1px solid #eee;
+    }
+    &Content {
+      padding: 10px 0;
+      font-size: 14px;
+      color: #333;
+    }
   }
 }

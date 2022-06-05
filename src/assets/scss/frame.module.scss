@@ -7,7 +7,10 @@
   transform: translate(-50%, -50%);
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 0 5px #eee;
+  background-color: #fff;
+  box-shadow: 0 0 5px #ccc;
+  display: flex;
+  flex-direction: column;
   &Top {
     display: flex;
     justify-content: flex-end;
@@ -19,5 +22,7 @@
   }
   &Content {
     padding: 15px;
+    flex: 1;
+    overflow: hidden;
   }
 }

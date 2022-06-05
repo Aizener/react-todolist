@@ -1,0 +1,15 @@
+.toast {
+  position: fixed;
+  left: 50%;
+  top: 50px;
+  color: #fff;
+  font-size: 14px;
+  width: 300px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(-50%);
+  box-shadow: 0 0 5px #999;
+  background-color: orange;
+}

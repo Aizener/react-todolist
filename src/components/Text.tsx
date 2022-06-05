@@ -10,11 +10,14 @@ const Text: React.FC<{
 }> = (props) => {
   return (
     <textarea
+      value={props.value}
       style={{
         width: props.width,
         height: props.height
       }}
       className={style.text}
+      placeholder={props.placeholder}
+      onChange={e => props.onChange(e.target.value)}
     ></textarea>
   )
 }
