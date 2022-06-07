@@ -11,6 +11,7 @@ const TodoList: React.FC<{}> = () => {
   const [content, setContent] = useState<string>('')
   const [list, setList] = useState<Array<{[props: string]: any}>>([])
   const [flist, setFlist] = useState<Array<{[props: string]: any}>>([])
+  let dragType = 0
   return (
     <div className={style.todolist}>
       <div className={style.todolistLeft}>
@@ -56,11 +57,34 @@ const TodoList: React.FC<{}> = () => {
       <div
         className={style.todolistMiddle}
         onDragEnter={e => {
+          if (dragType !== 2) {
+            return
+          }
           const el = document.querySelector('#list-left') as HTMLElement
           el.style.boxShadow = `3px 3px 5px inset #ccc, -3px -3px 5px inset #eee`
         }}
         onDragLeave={e => {
-          (e.target as HTMLElement).style.boxShadow = 'none'
+          if (dragType !== 2) {
+            return
+          }
+          ;(e.target as HTMLElement).style.boxShadow = 'none'
+        }}
+        onDragOver={e => {
+          e.preventDefault()
+        }}
+        onDrop={e => {
+          if (dragType !== 2) {
+            return
+          }
+          const el = document.querySelector('#list-left') as HTMLElement
+          el.style.boxShadow = 'none'
+          let data: any = e.dataTransfer.getData('detail')
+          data = JSON.parse(data)
+          const _list = flist.slice()
+          _list.splice(data.idx, 1)
+          setFlist(_list)
+          setList([...list, { title: data.title, content: data.content }])
+          e.preventDefault()
         }}
       >
         <ul id="list-left" className={style.list}>
@@ -71,7 +95,12 @@ const TodoList: React.FC<{}> = () => {
                 className={style.listItem}
                 draggable
                 onDragStart={e => {
+                  dragType = 1
                   e.dataTransfer.setData('detail', JSON.stringify({...item, idx}))
+                  ;(e.target as HTMLElement).style.boxShadow = '0 0 10px gray'
+                }}
+                onDragEnd={e => {
+                  (e.target as HTMLElement).style.boxShadow = ''
                 }}
               >
                 <p className={style.listItemTitle}>{item.title}</p>
@@ -84,15 +113,25 @@ const TodoList: React.FC<{}> = () => {
       <div
         className={style.todolistRight}
         onDragEnter={e => {
+          if (dragType !== 1) {
+            return
+          }
           const el = document.querySelector('#list-right') as HTMLElement
           el.style.boxShadow = `3px 3px 5px inset #ccc, -3px -3px 5px inset #eee`
         }}
         onDragLeave={e => {
+          if (dragType !== 1) {
+            return
+          }
           (e.target as HTMLElement).style.boxShadow = 'none'
         }}
         onDragOver={e => e.preventDefault()}
         onDrop={e => {
-          (e.target as HTMLElement).style.boxShadow = 'none'
+          if (dragType !== 1) {
+            return
+          }
+          const el = document.querySelector('#list-right') as HTMLElement
+          el.style.boxShadow = 'none'
           let data: any = e.dataTransfer.getData('detail')
           data = JSON.parse(data)
           const _list = list.slice()
@@ -107,10 +146,15 @@ const TodoList: React.FC<{}> = () => {
             flist.map((item, idx) => (
               <li
                 key={idx}
-                className={style.listItem}
+                className={`${style.listItem} ${style.listItemFinished}`}
                 draggable
                 onDragStart={e => {
+                  dragType = 2
                   e.dataTransfer.setData('detail', JSON.stringify({...item, idx}))
+                  ;(e.target as HTMLElement).style.boxShadow = '0 0 10px gray'
+                }}
+                onDragEnd={e => {
+                  (e.target as HTMLElement).style.boxShadow = ''
                 }}
               >
                 <p className={style.listItemTitle}>{item.title}</p>
