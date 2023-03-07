@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Input, Empty, Checkbox,  message } from 'antd';
 import classNames from 'classnames/bind';
@@ -96,6 +96,12 @@ export default function List() {
     return store.getState().listReducer.value.map(item => ({ isEdit: false, title: item, inputValue: item, isFinish: false  }));
   }
   const [showList, setShowList] = useState(getList());
+  const detail = useMemo(() => {
+    return {
+      total: showList.length,
+      finish: showList.filter(item => item.isFinish).length
+    };
+  }, [showList]);
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
       setShowList(getList());
@@ -106,10 +112,13 @@ export default function List() {
   });
   return (
     <div className={cls('list')}>
-      { renderListItems(showList, {
-        dispatch,
-        setShowList
-      }) }
+      {
+        renderListItems(showList, {
+          dispatch,
+          setShowList
+        })
+      }
+      { showList.length ? <div className={cls('list-total')}>共计{detail.total}个代办事项，已完成{detail.finish}个</div> : '' }
     </div>
   )
 }
